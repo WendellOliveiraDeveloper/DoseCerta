@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     alignSelf: "auto",
   },
   title: {
-    color: "#000000",
+    color: "#ffffff",
     fontSize: 16,
     fontWeight: "400",
   },

@@ -15,7 +15,11 @@ type Props = TouchableOpacityProps & {
 
 const ButtonComponent = ({ title, children, style, ...rest }: Props) => {
   return (
-    <TouchableOpacity activeOpacity={0.6} style={[styles.container, style]} {...rest}>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      style={[styles.container, style]}
+      {...rest}
+    >
       <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
         {children}
         {title && <Text style={styles.title}>{title}</Text>}
