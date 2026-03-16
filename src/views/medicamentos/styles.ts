@@ -17,4 +17,9 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 600,
   },
+  inputModal: {
+    alignSelf: "center",
+    gap: 23,
+    marginTop: 15,
+  },
 });

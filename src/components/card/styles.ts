@@ -20,4 +20,11 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  cardStatus: {
+    width: 90,
+    height: 25,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
