@@ -10,9 +10,11 @@ import { useState } from "react";
 import { TipoMedicamento } from "@/enuns/TipoMedicamento";
 import InputComponent from "@/components/Input";
 import ButtonComponent from "@/components/Button/ButtonComponent";
+import { MedicamentosModel } from "@/models/Medicamentos";
 
 const MedicamentosView = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [medicamentos, setMedicamentos] = useState<MedicamentosModel[]>([]);
   const [nomeMedicamento, setNomeMedicamento] = useState<string>("");
   const [horarioMedicamento, setHorarioMedicamento] = useState<string>("");
   const [dataVencimento, setDataVencimento] = useState<Date>(new Date());
@@ -71,33 +73,6 @@ const MedicamentosView = () => {
 
   const updateMedicine = () => {};
 
-  const itens: any = [
-    {
-      id: 1,
-      nomeMedicamento: "Dipirona",
-      horario: "13h00",
-      quantidade: "3",
-      dataVencimento: "04/01/2026",
-      statusMedicamento: TipoMedicamento.CANCELADO,
-    },
-    {
-      id: 2,
-      nomeMedicamento: "Prenazol",
-      horario: "21h00",
-      quantidade: "1",
-      dataVencimento: "21/02/2026",
-      statusMedicamento: TipoMedicamento.FINALIZADO,
-    },
-    {
-      id: 3,
-      nomeMedicamento: "AAAA",
-      horario: "15h30m",
-      quantidade: "2",
-      dataVencimento: "01/02/2026",
-      statusMedicamento: TipoMedicamento.ANDAMENTO,
-    },
-  ];
-
   return (
     <SafeAreaView>
       <NavComponent />
@@ -116,18 +91,23 @@ const MedicamentosView = () => {
       </View>
       <View style={{ padding: 10 }}>
         <FlatList
-          data={itens}
+          data={medicamentos}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <Card
-              titulo={item.nomeMedicamento}
-              horario={item.horario}
-              tipoMedicamento={item.statusMedicamento}
+              titulo={item.nome}
+              horario={item.horarioMedicacao}
+              tipoMedicamento={item.statusMedicacao}
               onPressEdit={() => abrirModalEdicao(item)}
               onPressDelete={() => console.log("funfa")}
             >
-              <Text>Quantidade: {item.quantidade}</Text>
-              <Text>Data de vencimento: {item.dataVencimento}</Text>
+              <Text>Quantidade: {item.quatidadeCaps}</Text>
+              <Text>
+                Data de vencimento:
+                {item.dataVencimento instanceof Date
+                  ? item.dataVencimento.toLocaleDateString()
+                  : item.dataVencimento}
+              </Text>
             </Card>
           )}
           showsVerticalScrollIndicator={false}
