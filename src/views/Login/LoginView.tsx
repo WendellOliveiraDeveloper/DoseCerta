@@ -5,6 +5,8 @@ import { useState } from "react";
 import InputComponent from "../../components/Input";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import InfoComponent from "../../components/Info";
+import { UserCreateDTO, UserLoginDTO } from "@/dto/user.dto";
+import { userStorage } from "@/storage/UserStorage";
 
 const LoginView = ({ navigation }: any) => {
   const [isLogin, setIsLogin] = useState(false);
@@ -29,7 +31,7 @@ const LoginView = ({ navigation }: any) => {
 
   const isRegistrando = isLogin;
 
-  const logar = () => {
+  const logar = async () => {
     if (!nomeUsuario.trim() || !senhaUsuario.trim()) {
       mostrarInfo("Erro", "Preencha todos os campos!", true);
       return;
@@ -41,12 +43,24 @@ const LoginView = ({ navigation }: any) => {
         return;
       }
 
-      console.log("Registrando:", { nomeUsuario, emailUsuario, senhaUsuario });
+      const payload: UserCreateDTO = {
+        nome: nomeUsuario,
+        email: emailUsuario,
+        senha: senhaUsuario,
+      };
+
+      console.log("Registrando:", payload);
       mostrarInfo("Sucesso", "Cadastro realizado com sucesso!");
       return;
     }
 
-    console.log("Logando:", { nomeUsuario, senhaUsuario });
+    const payloadLogin: UserLoginDTO = {
+      nome: nomeUsuario,
+      senha: senhaUsuario,
+    };
+
+    const storage = await userStorage.save("aasdad.token", payloadLogin);
+
     navigation.navigate("Home");
   };
 

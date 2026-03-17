@@ -3,10 +3,27 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import NavComponent from "../../components/nav";
 import ButtonComponent from "../../components/Button/ButtonComponent";
+import { useEffect, useState } from "react";
+import { UserResponseDTO } from "@/dto/user.dto";
+import { userStorage } from "@/storage/UserStorage";
 
 const HomeView = ({ navigation }: any) => {
-  const nome = "Wendell";
+  const [user, setUser] = useState<UserResponseDTO | null>();
+
   const medCount = 12;
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = async () => {
+    try {
+      const user = await userStorage.getUser();
+      setUser(user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,7 +36,7 @@ const HomeView = ({ navigation }: any) => {
             padding: 10,
           }}
         >
-          <Text style={styles.headerText}>Bem vindo, {nome}!</Text>
+          <Text style={styles.headerText}>Bem vindo, {user?.nome}!</Text>
           <Text style={styles.headerText}>
             {medCount <= 0
               ? "Você não tem medicamentos"
